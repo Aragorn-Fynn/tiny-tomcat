@@ -47,6 +47,7 @@ public class HttpServer {
                 // create a response
                 output = socket.getOutputStream();
                 Response response = new Response(output);
+                response.setRequest(request);
 
                 // handle the request
                 handle(request, response);
