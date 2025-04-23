@@ -1,12 +1,7 @@
 package com.feng;
 
-import org.apache.commons.io.Charsets;
-import org.apache.commons.io.IOUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.util.List;
 
 /**
  * A class represents http request
@@ -14,7 +9,6 @@ import java.util.List;
 public class Request {
 
     private InputStream input;
-    private List<String> requestLines;
     private String uri;
 
     public Request(InputStream input) {
@@ -26,14 +20,18 @@ public class Request {
     }
 
     public void parse() throws IOException {
-        requestLines = IOUtils.readLines(input, Charsets.UTF_8);
-        this.uri = parseUri();
+        byte[] bytes = new byte[2048];
+        input.read(bytes);
+        char[] arr=new char[2048];
+        for (int i=0; i<arr.length; i++) {
+            arr[i]= (char) bytes[i];
+        }
+        String requestLine = new String(arr);
+        this.uri = parseUri(requestLine);
     }
 
     // parse uri from request inputstream
-    private String parseUri() {
-
-        String headerLine = requestLines.get(0);
+    private String parseUri(String headerLine) {
         int firstBlank = headerLine.indexOf(' ');
         if (firstBlank!=-1) {
             int secondBlank = headerLine.indexOf(' ', firstBlank+1);

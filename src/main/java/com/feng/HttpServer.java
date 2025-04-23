@@ -15,7 +15,7 @@ import java.net.Socket;
  * A server that handles http request with ServerSocket/Socket.
  */
 public class HttpServer {
-    public static final String WEB_ROOT = System.getProperty("user.dir") + File.separator + "webroot";
+    public static final String WEB_ROOT = System.getProperty("user.dir") + File.separator + "WEB_ROOT";
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpServer.class);
     private static final String SHUTDOWN_COMMAND = "SHUTDOWN";
     private boolean shutdown=false;
