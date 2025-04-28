@@ -42,8 +42,10 @@ public class ServletProcessor implements Processor {
 
         Servlet servlet;
         try {
+            RequestFacade requestFacade = new RequestFacade(request);
+            ResponseFacade responseFacade = new ResponseFacade(response);
             servlet = (Servlet) myClass.newInstance();
-            servlet.service(request, response);
+            servlet.service(requestFacade, responseFacade);
         } catch (Exception e) {
             LOGGER.error("servlet runs error!", e);
         }
