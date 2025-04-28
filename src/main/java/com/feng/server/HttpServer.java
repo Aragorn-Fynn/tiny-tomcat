@@ -1,9 +1,8 @@
-package com.feng;
+package com.feng.server;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -11,13 +10,13 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import static com.feng.server.constant.Constants.SHUTDOWN_COMMAND;
+
 /**
  * A server that handles http request with ServerSocket/Socket.
  */
 public class HttpServer {
-    public static final String WEB_ROOT = System.getProperty("user.dir") + File.separator + "WEB_ROOT";
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpServer.class);
-    private static final String SHUTDOWN_COMMAND = "SHUTDOWN";
     private boolean shutdown=false;
 
     // create a server socket and wait for connection from client
@@ -25,9 +24,9 @@ public class HttpServer {
         ServerSocket ss=null;
         try {
             ss = new ServerSocket(8080, 1, InetAddress.getByName("127.0.0.1"));
-            LOGGER.info("Create server socket successfully!");
+            LOGGER.info("Start server successfully!");
         } catch (IOException e) {
-            LOGGER.error("Create server socket error!", e);
+            LOGGER.error("Start server error!", e);
             System.exit(1);
         }
 
@@ -65,7 +64,13 @@ public class HttpServer {
 
     private void handle(Request request, Response response) throws IOException {
         request.parse();
-        response.sendStaticResource();
+        if (request.getUri().startsWith("/servlet/")) {
+            Processor processor = new ServletProcessor();
+            processor.process(request, response);
+        } else {
+            Processor processor = new StaticResourceProcessor();
+            processor.process(request, response);
+        }
     }
 
     public static void main(String[] args) {

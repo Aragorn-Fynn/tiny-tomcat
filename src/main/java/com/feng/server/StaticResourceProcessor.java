@@ -1,4 +1,4 @@
-package com.feng;
+package com.feng.server;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -6,31 +6,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-/**
- * A class represents HTTP response
- */
-public class Response {
+import static com.feng.server.constant.Constants.WEB_ROOT;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Response.class);
+public class StaticResourceProcessor implements Processor {
+    private static final Logger LOGGER = LoggerFactory.getLogger(StaticResourceProcessor.class);
+    @Override
+    public void process(Request request, Response response) throws IOException {
 
-    Request request;
-    OutputStream output;
-
-    public Response(OutputStream output) {
-        this.output = output;
+        sendStaticResource(request, response);
     }
 
-    public void setRequest(Request request) {
-        this.request = request;
-    }
-
-    public void sendStaticResource() {
+    public void sendStaticResource(Request request, Response response) {
         try {
-            File file = new File(HttpServer.WEB_ROOT, request.getUri());
+            OutputStream output = response.output;
+            File file = new File(WEB_ROOT, request.getUri());
             if (file.exists()) {
                 IOUtils.write(FileUtils.readFileToByteArray(file), output);
             } else {
