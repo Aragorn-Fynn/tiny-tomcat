@@ -1,16 +1,17 @@
-package com.feng.server;
+package com.feng.server.connector.http;
 
 import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Locale;
 
-public class ResponseFacade implements ServletResponse {
+public class ResponseFacade implements HttpServletResponse {
 
-    private ServletResponse response = null;
+    private HttpServletResponse response = null;
 
-    public ResponseFacade(Response response) {
+    public ResponseFacade(HttpResponse response) {
         this.response = response;
     }
 
@@ -87,5 +88,90 @@ public class ResponseFacade implements ServletResponse {
     @Override
     public Locale getLocale() {
         return response.getLocale();
+    }
+
+    @Override
+    public void addCookie(Cookie cookie) {
+
+    }
+
+    @Override
+    public boolean containsHeader(String name) {
+        return false;
+    }
+
+    @Override
+    public String encodeURL(String url) {
+        return "";
+    }
+
+    @Override
+    public String encodeRedirectURL(String url) {
+        return "";
+    }
+
+    @Override
+    public String encodeUrl(String url) {
+        return "";
+    }
+
+    @Override
+    public String encodeRedirectUrl(String url) {
+        return "";
+    }
+
+    @Override
+    public void sendError(int sc, String msg) throws IOException {
+
+    }
+
+    @Override
+    public void sendError(int sc) throws IOException {
+
+    }
+
+    @Override
+    public void sendRedirect(String location) throws IOException {
+
+    }
+
+    @Override
+    public void setDateHeader(String name, long date) {
+
+    }
+
+    @Override
+    public void addDateHeader(String name, long date) {
+
+    }
+
+    @Override
+    public void setHeader(String name, String value) {
+
+    }
+
+    @Override
+    public void addHeader(String name, String value) {
+
+    }
+
+    @Override
+    public void setIntHeader(String name, int value) {
+
+    }
+
+    @Override
+    public void addIntHeader(String name, int value) {
+
+    }
+
+    @Override
+    public void setStatus(int sc) {
+
+    }
+
+    @Override
+    public void setStatus(int sc, String sm) {
+
     }
 }

@@ -1,5 +1,9 @@
-package com.feng.server;
+package com.feng.server.connector;
 
+import com.feng.server.connector.http.HttpRequest;
+import com.feng.server.connector.http.HttpResponse;
+import com.feng.server.connector.http.RequestFacade;
+import com.feng.server.connector.http.ResponseFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,8 +20,8 @@ public class ServletProcessor implements Processor {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServletProcessor.class);
 
     @Override
-    public void process(Request request, Response response) {
-        String uri = request.getUri();
+    public void process(HttpRequest request, HttpResponse response) {
+        String uri = request.getRequestURI();
         String servletName = uri.substring(uri.lastIndexOf("/")+1);
         URLClassLoader classLoader = null;
         URL[] urls = new URL[1];

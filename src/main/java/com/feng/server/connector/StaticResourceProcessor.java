@@ -1,5 +1,7 @@
-package com.feng.server;
+package com.feng.server.connector;
 
+import com.feng.server.connector.http.HttpRequest;
+import com.feng.server.connector.http.HttpResponse;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -14,15 +16,15 @@ import static com.feng.server.constant.Constants.WEB_ROOT;
 public class StaticResourceProcessor implements Processor {
     private static final Logger LOGGER = LoggerFactory.getLogger(StaticResourceProcessor.class);
     @Override
-    public void process(Request request, Response response) throws IOException {
+    public void process(HttpRequest request, HttpResponse response) throws IOException {
 
         sendStaticResource(request, response);
     }
 
-    public void sendStaticResource(Request request, Response response) {
+    public void sendStaticResource(HttpRequest request, HttpResponse response) {
         try {
-            OutputStream output = response.output;
-            File file = new File(WEB_ROOT, request.getUri());
+            OutputStream output = response.getOutputStream();
+            File file = new File(WEB_ROOT, request.getRequestURI());
             if (file.exists()) {
                 IOUtils.write(FileUtils.readFileToByteArray(file), output);
             } else {

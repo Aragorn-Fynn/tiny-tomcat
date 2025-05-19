@@ -1,21 +1,23 @@
-package com.feng.server;
+package com.feng.server.connector.http;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Collections;
+import java.security.Principal;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 
-public class RequestFacade implements ServletRequest {
+public class RequestFacade implements HttpServletRequest {
 
-    private ServletRequest request;
+    private HttpServletRequest request;
 
-    public RequestFacade(Request request) {
+    public RequestFacade(HttpRequest request) {
         this.request = request;
     }
 
@@ -162,5 +164,130 @@ public class RequestFacade implements ServletRequest {
     @Override
     public int getLocalPort() {
         return request.getLocalPort();
+    }
+
+    @Override
+    public String getAuthType() {
+        return "";
+    }
+
+    @Override
+    public Cookie[] getCookies() {
+        return new Cookie[0];
+    }
+
+    @Override
+    public long getDateHeader(String name) {
+        return 0;
+    }
+
+    @Override
+    public String getHeader(String name) {
+        return "";
+    }
+
+    @Override
+    public Enumeration getHeaders(String name) {
+        return null;
+    }
+
+    @Override
+    public Enumeration getHeaderNames() {
+        return null;
+    }
+
+    @Override
+    public int getIntHeader(String name) {
+        return 0;
+    }
+
+    @Override
+    public String getMethod() {
+        return "";
+    }
+
+    @Override
+    public String getPathInfo() {
+        return "";
+    }
+
+    @Override
+    public String getPathTranslated() {
+        return "";
+    }
+
+    @Override
+    public String getContextPath() {
+        return "";
+    }
+
+    @Override
+    public String getQueryString() {
+        return "";
+    }
+
+    @Override
+    public String getRemoteUser() {
+        return "";
+    }
+
+    @Override
+    public boolean isUserInRole(String role) {
+        return false;
+    }
+
+    @Override
+    public Principal getUserPrincipal() {
+        return null;
+    }
+
+    @Override
+    public String getRequestedSessionId() {
+        return "";
+    }
+
+    @Override
+    public String getRequestURI() {
+        return "";
+    }
+
+    @Override
+    public StringBuffer getRequestURL() {
+        return null;
+    }
+
+    @Override
+    public String getServletPath() {
+        return "";
+    }
+
+    @Override
+    public HttpSession getSession(boolean create) {
+        return null;
+    }
+
+    @Override
+    public HttpSession getSession() {
+        return null;
+    }
+
+    @Override
+    public boolean isRequestedSessionIdValid() {
+        return false;
+    }
+
+    @Override
+    public boolean isRequestedSessionIdFromCookie() {
+        return false;
+    }
+
+    @Override
+    public boolean isRequestedSessionIdFromURL() {
+        return false;
+    }
+
+    @Override
+    public boolean isRequestedSessionIdFromUrl() {
+        return false;
     }
 }
