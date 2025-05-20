@@ -1,4 +1,4 @@
-package com.feng.server.connector;
+package com.feng.server.core;
 
 import com.feng.server.connector.http.HttpRequest;
 import com.feng.server.connector.http.HttpResponse;
@@ -13,11 +13,15 @@ import java.io.OutputStream;
 
 import static com.feng.server.constant.Constants.WEB_ROOT;
 
+/**
+ * StaticResourceProcessor is used to process static resource request.
+ * It will read the file from the file system and write it to the output stream.
+ * If the file is not found, it will return a 404 error.
+ */
 public class StaticResourceProcessor implements Processor {
     private static final Logger LOGGER = LoggerFactory.getLogger(StaticResourceProcessor.class);
     @Override
-    public void process(HttpRequest request, HttpResponse response) throws IOException {
-
+    public void process(HttpRequest request, HttpResponse response) {
         sendStaticResource(request, response);
     }
 

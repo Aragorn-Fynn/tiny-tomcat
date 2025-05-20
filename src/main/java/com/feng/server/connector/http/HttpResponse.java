@@ -8,12 +8,16 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Locale;
 
+/**
+ * HttpResponse implements HttpServletResponse
+ * It is used to send the response to the client
+ */
 public class HttpResponse implements HttpServletResponse {
-    private final OutputStream output;
+    private final OutputStream outputStream;
     private HttpRequest request;
 
     public HttpResponse(OutputStream output) {
-        this.output = output;
+        this.outputStream = output;
     }
 
     @Override

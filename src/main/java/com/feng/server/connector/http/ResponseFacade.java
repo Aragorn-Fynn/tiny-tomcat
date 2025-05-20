@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Locale;
 
+/**
+ * ResponseFacade is a wrapper for HttpResponse
+ * It is for safe
+ */
 public class ResponseFacade implements HttpServletResponse {
 
     private HttpServletResponse response = null;

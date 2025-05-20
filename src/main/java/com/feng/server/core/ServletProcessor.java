@@ -1,4 +1,4 @@
-package com.feng.server.connector;
+package com.feng.server.core;
 
 import com.feng.server.connector.http.HttpRequest;
 import com.feng.server.connector.http.HttpResponse;
@@ -16,6 +16,11 @@ import java.net.URLStreamHandler;
 
 import static com.feng.server.constant.Constants.WEB_ROOT;
 
+/**
+ * ServletProcessor is used to process servlet request.
+ * It will load the servlet class and call its service method.
+ * It will also create a request and response object and pass them to the servlet.
+ */
 public class ServletProcessor implements Processor {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServletProcessor.class);
 

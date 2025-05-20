@@ -14,8 +14,15 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * HttpRequest implements HttpServletRequest
+ * It is used to parse the request from the client
+ */
 public class HttpRequest implements HttpServletRequest {
+
+    private SocketInputStream inputStream;
     public HttpRequest(SocketInputStream input) {
+        this.inputStream = input;
     }
 
     @Override

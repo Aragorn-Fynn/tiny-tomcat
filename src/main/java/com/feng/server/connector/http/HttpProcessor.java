@@ -1,51 +1,58 @@
 package com.feng.server.connector.http;
 
-import com.feng.server.connector.Processor;
-import com.feng.server.connector.ServletProcessor;
-import com.feng.server.connector.StaticResourceProcessor;
+import com.feng.server.core.Processor;
+import com.feng.server.core.ServletProcessor;
+import com.feng.server.core.StaticResourceProcessor;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 
+/**
+ * HttpProcessor is used to process a request.
+ */
 public class HttpProcessor {
     HttpConnector connector;
     public HttpProcessor(HttpConnector connector) {
         this.connector = connector;
     }
 
-    public void process(Socket socket) {
+    /**
+     * Process the request:
+     * 1. create a request
+     * 2. create a response
+     * 3. handle the request
+     * 4. close the socket
+     * @param socket
+     */
+    public void process(Socket socket) throws IOException {
         SocketInputStream input;
         OutputStream output;
         try {
             input = new SocketInputStream(socket.getInputStream());
             output = socket.getOutputStream();
 
-            // create a request
+            // create a http request
             HttpRequest request = new HttpRequest(input);
-            // create a response
+            // create a http response
             HttpResponse response = new HttpResponse(output);
             response.setRequest(request);
 
-            // handle the request
+            // handle the http request
             handle(request, response);
-
-            // close the socket
+        } finally {
             socket.close();
-
-        } catch (Exception e) {
-
         }
     }
 
     private void handle(HttpRequest request, HttpResponse response) throws IOException {
+        Processor processor;
         if (request.getRequestURI().startsWith("/servlet/")) {
-            Processor processor = new ServletProcessor();
-            processor.process(request, response);
+            processor = new ServletProcessor();
         } else {
-            Processor processor = new StaticResourceProcessor();
-            processor.process(request, response);
+            processor = new StaticResourceProcessor();
         }
+        processor.process(request, response);
     }
 
 }

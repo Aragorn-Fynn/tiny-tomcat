@@ -13,6 +13,10 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * RequestFacade is a wrapper for HttpRequest
+ * It is for safe
+ */
 public class RequestFacade implements HttpServletRequest {
 
     private HttpServletRequest request;

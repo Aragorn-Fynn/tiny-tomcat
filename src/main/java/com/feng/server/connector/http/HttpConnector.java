@@ -8,6 +8,11 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * HttpConnector is used to accept http request and handle it with HttpProcessor.
+ * It will start a server socket to listen on port 8080.
+ * It will create a new thread to handle request.
+ */
 public class HttpConnector implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpConnector.class);
     private boolean shutdown=false;
@@ -16,6 +21,7 @@ public class HttpConnector implements Runnable {
     public void run() {
         ServerSocket ss=null;
         try {
+            // start a server socket
             ss = new ServerSocket(8080, 1, InetAddress.getByName("127.0.0.1"));
             LOGGER.info("Start server successfully!");
         } catch (IOException e) {
@@ -23,7 +29,7 @@ public class HttpConnector implements Runnable {
             System.exit(1);
         }
 
-        // Loop waiting for a request
+        // wait for http request, and handle it with HttpProcessor
         while (!shutdown) {
             Socket socket;
             try {
